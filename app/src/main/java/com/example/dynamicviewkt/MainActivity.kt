@@ -1,7 +1,6 @@
 package com.example.dynamicviewkt
 
 import android.os.Bundle
-import android.provider.ContactsContract
 import android.view.LayoutInflater
 import android.view.View
 import android.view.animation.Animation
@@ -21,7 +20,6 @@ class MainActivity : AppCompatActivity() {
         private val TAG: String? = MainActivity::class.simpleName
         private val REQ_CAMERA_IMG = 101
     }
-
     private var ticketTypeList = ArrayList<Ticket>()
 
     private var rotateDown: Animation? = null
@@ -33,6 +31,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
 
+        sync
 
         initAnimation()
 
@@ -103,10 +102,13 @@ class MainActivity : AppCompatActivity() {
 
 
                         if (linearLayout.visibility == View.GONE) {
-                            linearLayout.visibility = View.VISIBLE
+
+                            linearLayout.visible()
+                            linearLayout.expand()
+
                             ivDropDown.startAnimation(rotateUp)
                         } else {
-                            linearLayout.visibility = View.GONE
+                            linearLayout.collapse()
 
                             ivDropDown.startAnimation(rotateDown)
 
@@ -124,10 +126,10 @@ class MainActivity : AppCompatActivity() {
                                 .findViewById<ImageView>(R.id.iv_drop_down)
 
 
-                        if (linearLayout.visibility == View.VISIBLE) {
-                            ivDropDown.startAnimation(rotateDown)
-                            linearLayout.visibility = View.GONE
 
+                        if (linearLayout.visibility == View.VISIBLE) {
+                            linearLayout.collapse()
+                            ivDropDown.startAnimation(rotateDown)
                         }
 
                     }
